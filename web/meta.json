@@ -1,0 +1,384 @@
+{
+  "title": "Breast Cancer Ensemble Classifier",
+  "subtitle": "Classifies a breast tumour as benign or malignant from 10 measurements of cell nuclei in a biopsy image, using a stacked ensemble of five models.",
+  "tags": [
+    "Classification",
+    "Ensembles",
+    "Stacking",
+    "Blending",
+    "scikit-learn",
+    "ONNX"
+  ],
+  "task": "classification",
+  "classes": [
+    0,
+    1
+  ],
+  "positive_class": 1,
+  "output_label": "Predicted probability the tumour is malignant",
+  "verdicts": [
+    "Looks benign",
+    "Uncertain \u2014 needs expert review",
+    "Looks malignant"
+  ],
+  "thresholds": [
+    0.3,
+    0.7
+  ],
+  "result_note": "Educational demo only \u2014 <b>not medical advice</b> and not a diagnostic tool. Try \u201cRandom example\u201d to load real cases from the test set.",
+  "features": [
+    {
+      "name": "mean_compactness",
+      "label": "Mean compactness",
+      "help": "average over all cell nuclei in the image",
+      "type": "number",
+      "min": 0.01938,
+      "max": 0.3454,
+      "step": "any",
+      "default": 0.09228
+    },
+    {
+      "name": "mean_concave_points",
+      "label": "Mean concave points",
+      "help": "average over all cell nuclei in the image",
+      "type": "number",
+      "min": 0.0,
+      "max": 0.2012,
+      "step": "any",
+      "default": 0.03334
+    },
+    {
+      "name": "radius_error",
+      "label": "Radius (std. error)",
+      "help": "standard error across nuclei",
+      "type": "number",
+      "min": 0.1115,
+      "max": 2.873,
+      "step": "any",
+      "default": 0.3274
+    },
+    {
+      "name": "texture_error",
+      "label": "Texture (std. error)",
+      "help": "standard error across nuclei",
+      "type": "number",
+      "min": 0.3602,
+      "max": 4.885,
+      "step": "any",
+      "default": 1.139
+    },
+    {
+      "name": "area_error",
+      "label": "Area (std. error)",
+      "help": "standard error across nuclei",
+      "type": "number",
+      "min": 6.802,
+      "max": 542.2,
+      "step": "any",
+      "default": 24.87
+    },
+    {
+      "name": "compactness_error",
+      "label": "Compactness (std. error)",
+      "help": "standard error across nuclei",
+      "type": "number",
+      "min": 0.002252,
+      "max": 0.1064,
+      "step": "any",
+      "default": 0.02016
+    },
+    {
+      "name": "fractal_dimension_error",
+      "label": "Fractal dimension (std. error)",
+      "help": "standard error across nuclei",
+      "type": "number",
+      "min": 0.0008948,
+      "max": 0.02984,
+      "step": "any",
+      "default": 0.003131
+    },
+    {
+      "name": "worst_texture",
+      "label": "Worst texture",
+      "help": "average of the 3 largest nuclei",
+      "type": "number",
+      "min": 12.02,
+      "max": 49.54,
+      "step": "any",
+      "default": 25.48
+    },
+    {
+      "name": "worst_perimeter",
+      "label": "Worst perimeter",
+      "help": "average of the 3 largest nuclei",
+      "type": "number",
+      "min": 50.41,
+      "max": 251.2,
+      "step": "any",
+      "default": 97.65
+    },
+    {
+      "name": "worst_concave_points",
+      "label": "Worst concave points",
+      "help": "average of the 3 largest nuclei",
+      "type": "number",
+      "min": 0.0,
+      "max": 0.291,
+      "step": "any",
+      "default": 0.101
+    }
+  ],
+  "examples": [
+    {
+      "mean_compactness": 0.09871,
+      "mean_concave_points": 0.09063,
+      "radius_error": 0.4674,
+      "texture_error": 1.375,
+      "area_error": 56.18,
+      "compactness_error": 0.01929,
+      "fractal_dimension_error": 0.001807,
+      "worst_texture": 30.96,
+      "worst_perimeter": 139.8,
+      "worst_concave_points": 0.1466
+    },
+    {
+      "mean_compactness": 0.1893,
+      "mean_concave_points": 0.09194,
+      "radius_error": 0.3147,
+      "texture_error": 0.9857,
+      "area_error": 33.12,
+      "compactness_error": 0.0547,
+      "fractal_dimension_error": 0.006355,
+      "worst_texture": 23.05,
+      "worst_perimeter": 122.1,
+      "worst_concave_points": 0.1775
+    },
+    {
+      "mean_compactness": 0.2087,
+      "mean_concave_points": 0.1562,
+      "radius_error": 0.6242,
+      "texture_error": 0.9209,
+      "area_error": 80.99,
+      "compactness_error": 0.03726,
+      "fractal_dimension_error": 0.004028,
+      "worst_texture": 28.74,
+      "worst_perimeter": 172.0,
+      "worst_concave_points": 0.2422
+    },
+    {
+      "mean_compactness": 0.06934,
+      "mean_concave_points": 0.02657,
+      "radius_error": 0.1783,
+      "texture_error": 0.4125,
+      "area_error": 17.72,
+      "compactness_error": 0.01485,
+      "fractal_dimension_error": 0.001767,
+      "worst_texture": 15.73,
+      "worst_perimeter": 104.5,
+      "worst_concave_points": 0.08178
+    },
+    {
+      "mean_compactness": 0.09947,
+      "mean_concave_points": 0.04938,
+      "radius_error": 0.4204,
+      "texture_error": 2.22,
+      "area_error": 38.87,
+      "compactness_error": 0.02983,
+      "fractal_dimension_error": 0.003249,
+      "worst_texture": 29.25,
+      "worst_perimeter": 108.4,
+      "worst_concave_points": 0.1225
+    },
+    {
+      "mean_compactness": 0.04413,
+      "mean_concave_points": 0.005664,
+      "radius_error": 0.1344,
+      "texture_error": 1.083,
+      "area_error": 9.332,
+      "compactness_error": 0.0059,
+      "fractal_dimension_error": 0.002295,
+      "worst_texture": 26.43,
+      "worst_perimeter": 76.38,
+      "worst_concave_points": 0.02832
+    },
+    {
+      "mean_compactness": 0.08424,
+      "mean_concave_points": 0.06638,
+      "radius_error": 0.7474,
+      "texture_error": 1.016,
+      "area_error": 79.25,
+      "compactness_error": 0.02203,
+      "fractal_dimension_error": 0.001948,
+      "worst_texture": 24.56,
+      "worst_perimeter": 128.8,
+      "worst_concave_points": 0.152
+    },
+    {
+      "mean_compactness": 0.1306,
+      "mean_concave_points": 0.08691,
+      "radius_error": 0.9553,
+      "texture_error": 1.186,
+      "area_error": 124.4,
+      "compactness_error": 0.03169,
+      "fractal_dimension_error": 0.004045,
+      "worst_texture": 28.64,
+      "worst_perimeter": 170.3,
+      "worst_concave_points": 0.182
+    },
+    {
+      "mean_compactness": 0.1113,
+      "mean_concave_points": 0.03613,
+      "radius_error": 0.2574,
+      "texture_error": 1.376,
+      "area_error": 18.15,
+      "compactness_error": 0.04638,
+      "fractal_dimension_error": 0.004976,
+      "worst_texture": 26.87,
+      "worst_perimeter": 90.14,
+      "worst_concave_points": 0.1555
+    },
+    {
+      "mean_compactness": 0.1438,
+      "mean_concave_points": 0.05397,
+      "radius_error": 0.1745,
+      "texture_error": 0.489,
+      "area_error": 14.91,
+      "compactness_error": 0.01812,
+      "fractal_dimension_error": 0.003696,
+      "worst_texture": 19.14,
+      "worst_perimeter": 113.1,
+      "worst_concave_points": 0.1251
+    },
+    {
+      "mean_compactness": 0.04362,
+      "mean_concave_points": 0.0,
+      "radius_error": 0.3857,
+      "texture_error": 1.428,
+      "area_error": 19.15,
+      "compactness_error": 0.00466,
+      "fractal_dimension_error": 0.002783,
+      "worst_texture": 30.37,
+      "worst_perimeter": 59.16,
+      "worst_concave_points": 0.0
+    },
+    {
+      "mean_compactness": 0.1206,
+      "mean_concave_points": 0.01787,
+      "radius_error": 0.361,
+      "texture_error": 1.05,
+      "area_error": 26.65,
+      "compactness_error": 0.02417,
+      "fractal_dimension_error": 0.003114,
+      "worst_texture": 17.72,
+      "worst_perimeter": 83.09,
+      "worst_concave_points": 0.04766
+    }
+  ],
+  "model_name": "Stacking",
+  "comparison": [
+    {
+      "model": "SVM (RBF)",
+      "ROC-AUC": 0.99656002751978,
+      "F1": 0.9639047417317831,
+      "Recall": 0.9470588235294118,
+      "Accuracy": 0.9736263736263737
+    },
+    {
+      "model": "Logistic Regression",
+      "ROC-AUC": 0.9961472308221534,
+      "F1": 0.9616860538697009,
+      "Recall": 0.9392156862745099,
+      "Accuracy": 0.9721611721611723
+    },
+    {
+      "model": "Stacking",
+      "ROC-AUC": 0.9959408324733402,
+      "F1": 0.9619750050030114,
+      "Recall": 0.9490196078431373,
+      "Accuracy": 0.9721611721611723
+    },
+    {
+      "model": "Soft Voting",
+      "ROC-AUC": 0.9954248366013072,
+      "F1": 0.9559661691015473,
+      "Recall": 0.927450980392157,
+      "Accuracy": 0.9684981684981686
+    },
+    {
+      "model": "Blending",
+      "ROC-AUC": 0.9951152390780873,
+      "F1": 0.9581755317629655,
+      "Recall": 0.931372549019608,
+      "Accuracy": 0.9699633699633701
+    },
+    {
+      "model": "Random Forest",
+      "ROC-AUC": 0.9903336773305812,
+      "F1": 0.9252376397127774,
+      "Recall": 0.9078431372549022,
+      "Accuracy": 0.9457875457875459
+    },
+    {
+      "model": "Gradient Boosting",
+      "ROC-AUC": 0.9885448916408669,
+      "F1": 0.93036516031311,
+      "Recall": 0.9137254901960786,
+      "Accuracy": 0.9494505494505495
+    },
+    {
+      "model": "k-NN",
+      "ROC-AUC": 0.9863777089783281,
+      "F1": 0.948906610655952,
+      "Recall": 0.9215686274509806,
+      "Accuracy": 0.9633699633699634
+    }
+  ],
+  "test_metrics": {
+    "ROC-AUC": 0.996031746031746,
+    "Accuracy": 0.9736842105263158,
+    "Recall (malignant)": 0.9285714285714286,
+    "Precision (malignant)": 1.0,
+    "F1": 0.9629629629629629
+  },
+  "metric_formats": {
+    "Accuracy": "percent",
+    "Recall (malignant)": "percent",
+    "Precision (malignant)": "percent",
+    "F1": "percent"
+  },
+  "metrics_note": "Held-out test set: 114 tumours (positive class = malignant).",
+  "figures": [
+    {
+      "src": "assets/model_comparison.png",
+      "caption": "Cross-validated ROC-AUC: single models vs voting, blending and stacking."
+    },
+    {
+      "src": "assets/stacking_weights.png",
+      "caption": "The stacking meta-model learns how much to trust each base model."
+    },
+    {
+      "src": "assets/roc_curve.png",
+      "caption": "ROC curve of the stacking model on the test set."
+    },
+    {
+      "src": "assets/confusion_matrix.png",
+      "caption": "Correct and wrong predictions on the test set."
+    }
+  ],
+  "steps": [
+    "Used the Wisconsin Diagnostic Breast Cancer data (569 tumours, 30 measurements, malignant = positive class).",
+    "Picked 10 complementary measurements with forward feature selection on the training set only.",
+    "Trained 5 diverse base models: Logistic Regression, SVM, k-NN, Random Forest, Gradient Boosting.",
+    "Combined them three ways: soft voting, blending (hold-out meta-model) and stacking (out-of-fold meta-model).",
+    "Compared everything with 5-fold cross-validation repeated 3 times, then checked once on a held-out 20% test set.",
+    "Exported the full stacking pipeline to ONNX so it runs in the browser."
+  ],
+  "dataset": {
+    "name": "Breast Cancer Wisconsin (Diagnostic)",
+    "url": "https://archive.ics.uci.edu/dataset/17/breast+cancer+wisconsin+diagnostic",
+    "rows": 569
+  },
+  "repo_url": "https://github.com/ravshanovna-d/breast-cancer-ensemble",
+  "notebook_url": "https://github.com/ravshanovna-d/breast-cancer-ensemble/blob/main/notebook.ipynb",
+  "footer": "Built by <a href=\"https://github.com/ravshanovna-d\">ravshanovna-d</a>"
+}
