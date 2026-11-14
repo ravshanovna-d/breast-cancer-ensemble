@@ -2,7 +2,7 @@
 
 Classifies a breast tumour as benign or malignant from 10 measurements of cell nuclei in a biopsy image, and compares single models with voting, blending and stacking ensembles.
 
-**[Live demo →](LIVE_DEMO_URL)** — enter (or load) a tumour's measurements and get the stacked ensemble's probability of malignancy. The model runs in your browser (ONNX Runtime Web), no server needed.
+**[Live demo →](https://ravshanovna-breast-cancer.vercel.app)** — enter (or load) a tumour's measurements and get the stacked ensemble's probability of malignancy. The model runs in your browser (ONNX Runtime Web), no server needed.
 
 > Educational project — **not medical advice** and not a diagnostic tool.
 
